@@ -5,4 +5,5 @@ for line in sys.stdin:
         date, time, store, item, cost, payment = data
         print '%s\t%s' % (date,cost)
 
-week = date.time.date(date).strftime("%A")
+from datetime import datetime
+weekday = datetime.strptime(tufecha, "%Y-%m-%d").weekday()

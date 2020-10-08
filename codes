@@ -24,3 +24,41 @@ cost_col = 4
       weekday = datetime.datetime(year, month, day).strftime("%w")
 
       print weekday + "\t" + str(cost) # dia_num  costo
+/---------------------------------------------------------------------------------------
+
+#!/usr/bin/python
+import sys
+import datetime
+
+weekday_str = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
+
+
+weekday_mean = [0.0]*7
+weekday_stdev = [0.0]*7
+weekday_count = [0]*7
+
+data = {}
+
+for line in sys.stdin:
+    weekday, cost = line.strip().split("\t")
+    weekday = int(weekday)
+    cost = float(cost)
+
+    if weekday in data:
+      data[weekday].append(cost)
+    else:
+      data[weekday] = [cost]
+
+    weekday_mean[weekday] += cost
+    weekday_count[weekday] += 1
+
+for i in range(7):
+    if weekday_count[i] == 0: continue
+    weekday_mean[i] /= weekday_count[i]
+    for cost in data[i]:
+    weekday_stdev[i] += (cost-weekday_mean[i])**2
+
+    weekday_stdev[i] = (weekday_stdev[i]/weekday_count[i])**0.5
+
+for i in range(7):
+    print weekday_str[i] + "\t" + str(weekday_mean[i]) + "\t" + str(weekday_stdev[i])

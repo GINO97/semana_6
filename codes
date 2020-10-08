@@ -7,3 +7,20 @@ for line in sys.stdin:
 
 from datetime import datetime
 weekday = datetime.strptime(tufecha, "%Y-%m-%d").weekday()
+
+
+import sys
+import datetime
+
+date_col = 0
+cost_col = 4
+
+    for line in sys.stdin:
+      line = line.strip().split("\t")
+      date = line[date_col]
+      cost = float(line[cost_col])
+
+      year, month, day = list(map(int,date.split("-")))
+      weekday = datetime.datetime(year, month, day).strftime("%w")
+
+      print weekday + "\t" + str(cost) # dia_num  costo
